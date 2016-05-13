@@ -1,0 +1,538 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B74388371CE688DF008C00CF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B74388361CE688DF008C00CF /* main.m */; };
+		B743883A1CE688DF008C00CF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B74388391CE688DF008C00CF /* AppDelegate.m */; };
+		B743883D1CE688DF008C00CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B743883C1CE688DF008C00CF /* ViewController.m */; };
+		B74388401CE688DF008C00CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B743883E1CE688DF008C00CF /* Main.storyboard */; };
+		B74388431CE688DF008C00CF /* BillChat.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B74388411CE688DF008C00CF /* BillChat.xcdatamodeld */; };
+		B74388451CE688DF008C00CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B74388441CE688DF008C00CF /* Assets.xcassets */; };
+		B74388481CE688DF008C00CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B74388461CE688DF008C00CF /* LaunchScreen.storyboard */; };
+		B74388531CE688DF008C00CF /* BillChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B74388521CE688DF008C00CF /* BillChatTests.m */; };
+		B743885E1CE688DF008C00CF /* BillChatUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B743885D1CE688DF008C00CF /* BillChatUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B743884F1CE688DF008C00CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B743882A1CE688DF008C00CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B74388311CE688DF008C00CF;
+			remoteInfo = BillChat;
+		};
+		B743885A1CE688DF008C00CF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B743882A1CE688DF008C00CF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B74388311CE688DF008C00CF;
+			remoteInfo = BillChat;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B74388321CE688DF008C00CF /* BillChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BillChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B74388361CE688DF008C00CF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B74388381CE688DF008C00CF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B74388391CE688DF008C00CF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B743883B1CE688DF008C00CF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		B743883C1CE688DF008C00CF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		B743883F1CE688DF008C00CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B74388421CE688DF008C00CF /* BillChat.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BillChat.xcdatamodel; sourceTree = "<group>"; };
+		B74388441CE688DF008C00CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B74388471CE688DF008C00CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B74388491CE688DF008C00CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B743884E1CE688DF008C00CF /* BillChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BillChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B74388521CE688DF008C00CF /* BillChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BillChatTests.m; sourceTree = "<group>"; };
+		B74388541CE688DF008C00CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B74388591CE688DF008C00CF /* BillChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BillChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B743885D1CE688DF008C00CF /* BillChatUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BillChatUITests.m; sourceTree = "<group>"; };
+		B743885F1CE688DF008C00CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B743882F1CE688DF008C00CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B743884B1CE688DF008C00CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B74388561CE688DF008C00CF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B74388291CE688DF008C00CF = {
+			isa = PBXGroup;
+			children = (
+				B74388341CE688DF008C00CF /* BillChat */,
+				B74388511CE688DF008C00CF /* BillChatTests */,
+				B743885C1CE688DF008C00CF /* BillChatUITests */,
+				B74388331CE688DF008C00CF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B74388331CE688DF008C00CF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B74388321CE688DF008C00CF /* BillChat.app */,
+				B743884E1CE688DF008C00CF /* BillChatTests.xctest */,
+				B74388591CE688DF008C00CF /* BillChatUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B74388341CE688DF008C00CF /* BillChat */ = {
+			isa = PBXGroup;
+			children = (
+				B74388381CE688DF008C00CF /* AppDelegate.h */,
+				B74388391CE688DF008C00CF /* AppDelegate.m */,
+				B743883B1CE688DF008C00CF /* ViewController.h */,
+				B743883C1CE688DF008C00CF /* ViewController.m */,
+				B743883E1CE688DF008C00CF /* Main.storyboard */,
+				B74388441CE688DF008C00CF /* Assets.xcassets */,
+				B74388461CE688DF008C00CF /* LaunchScreen.storyboard */,
+				B74388491CE688DF008C00CF /* Info.plist */,
+				B74388411CE688DF008C00CF /* BillChat.xcdatamodeld */,
+				B74388351CE688DF008C00CF /* Supporting Files */,
+			);
+			path = BillChat;
+			sourceTree = "<group>";
+		};
+		B74388351CE688DF008C00CF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B74388361CE688DF008C00CF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B74388511CE688DF008C00CF /* BillChatTests */ = {
+			isa = PBXGroup;
+			children = (
+				B74388521CE688DF008C00CF /* BillChatTests.m */,
+				B74388541CE688DF008C00CF /* Info.plist */,
+			);
+			path = BillChatTests;
+			sourceTree = "<group>";
+		};
+		B743885C1CE688DF008C00CF /* BillChatUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B743885D1CE688DF008C00CF /* BillChatUITests.m */,
+				B743885F1CE688DF008C00CF /* Info.plist */,
+			);
+			path = BillChatUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B74388311CE688DF008C00CF /* BillChat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B74388621CE688DF008C00CF /* Build configuration list for PBXNativeTarget "BillChat" */;
+			buildPhases = (
+				B743882E1CE688DF008C00CF /* Sources */,
+				B743882F1CE688DF008C00CF /* Frameworks */,
+				B74388301CE688DF008C00CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BillChat;
+			productName = BillChat;
+			productReference = B74388321CE688DF008C00CF /* BillChat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B743884D1CE688DF008C00CF /* BillChatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B74388651CE688DF008C00CF /* Build configuration list for PBXNativeTarget "BillChatTests" */;
+			buildPhases = (
+				B743884A1CE688DF008C00CF /* Sources */,
+				B743884B1CE688DF008C00CF /* Frameworks */,
+				B743884C1CE688DF008C00CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B74388501CE688DF008C00CF /* PBXTargetDependency */,
+			);
+			name = BillChatTests;
+			productName = BillChatTests;
+			productReference = B743884E1CE688DF008C00CF /* BillChatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B74388581CE688DF008C00CF /* BillChatUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B74388681CE688DF008C00CF /* Build configuration list for PBXNativeTarget "BillChatUITests" */;
+			buildPhases = (
+				B74388551CE688DF008C00CF /* Sources */,
+				B74388561CE688DF008C00CF /* Frameworks */,
+				B74388571CE688DF008C00CF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B743885B1CE688DF008C00CF /* PBXTargetDependency */,
+			);
+			name = BillChatUITests;
+			productName = BillChatUITests;
+			productReference = B74388591CE688DF008C00CF /* BillChatUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B743882A1CE688DF008C00CF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "ALM Projects";
+				TargetAttributes = {
+					B74388311CE688DF008C00CF = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					B743884D1CE688DF008C00CF = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = B74388311CE688DF008C00CF;
+					};
+					B74388581CE688DF008C00CF = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = B74388311CE688DF008C00CF;
+					};
+				};
+			};
+			buildConfigurationList = B743882D1CE688DF008C00CF /* Build configuration list for PBXProject "BillChat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B74388291CE688DF008C00CF;
+			productRefGroup = B74388331CE688DF008C00CF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B74388311CE688DF008C00CF /* BillChat */,
+				B743884D1CE688DF008C00CF /* BillChatTests */,
+				B74388581CE688DF008C00CF /* BillChatUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B74388301CE688DF008C00CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B74388481CE688DF008C00CF /* LaunchScreen.storyboard in Resources */,
+				B74388451CE688DF008C00CF /* Assets.xcassets in Resources */,
+				B74388401CE688DF008C00CF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B743884C1CE688DF008C00CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B74388571CE688DF008C00CF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B743882E1CE688DF008C00CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B74388431CE688DF008C00CF /* BillChat.xcdatamodeld in Sources */,
+				B743883D1CE688DF008C00CF /* ViewController.m in Sources */,
+				B743883A1CE688DF008C00CF /* AppDelegate.m in Sources */,
+				B74388371CE688DF008C00CF /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B743884A1CE688DF008C00CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B74388531CE688DF008C00CF /* BillChatTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B74388551CE688DF008C00CF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B743885E1CE688DF008C00CF /* BillChatUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B74388501CE688DF008C00CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B74388311CE688DF008C00CF /* BillChat */;
+			targetProxy = B743884F1CE688DF008C00CF /* PBXContainerItemProxy */;
+		};
+		B743885B1CE688DF008C00CF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B74388311CE688DF008C00CF /* BillChat */;
+			targetProxy = B743885A1CE688DF008C00CF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B743883E1CE688DF008C00CF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B743883F1CE688DF008C00CF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B74388461CE688DF008C00CF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B74388471CE688DF008C00CF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B74388601CE688DF008C00CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B74388611CE688DF008C00CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B74388631CE688DF008C00CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BillChat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.almprojects.BillChat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B74388641CE688DF008C00CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BillChat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.almprojects.BillChat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		B74388661CE688DF008C00CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = BillChatTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.almprojects.BillChatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BillChat.app/BillChat";
+			};
+			name = Debug;
+		};
+		B74388671CE688DF008C00CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = BillChatTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.almprojects.BillChatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BillChat.app/BillChat";
+			};
+			name = Release;
+		};
+		B74388691CE688DF008C00CF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = BillChatUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.almprojects.BillChatUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = BillChat;
+			};
+			name = Debug;
+		};
+		B743886A1CE688DF008C00CF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = BillChatUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.almprojects.BillChatUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = BillChat;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B743882D1CE688DF008C00CF /* Build configuration list for PBXProject "BillChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B74388601CE688DF008C00CF /* Debug */,
+				B74388611CE688DF008C00CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B74388621CE688DF008C00CF /* Build configuration list for PBXNativeTarget "BillChat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B74388631CE688DF008C00CF /* Debug */,
+				B74388641CE688DF008C00CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B74388651CE688DF008C00CF /* Build configuration list for PBXNativeTarget "BillChatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B74388661CE688DF008C00CF /* Debug */,
+				B74388671CE688DF008C00CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		B74388681CE688DF008C00CF /* Build configuration list for PBXNativeTarget "BillChatUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B74388691CE688DF008C00CF /* Debug */,
+				B743886A1CE688DF008C00CF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B74388411CE688DF008C00CF /* BillChat.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B74388421CE688DF008C00CF /* BillChat.xcdatamodel */,
+			);
+			currentVersion = B74388421CE688DF008C00CF /* BillChat.xcdatamodel */;
+			path = BillChat.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = B743882A1CE688DF008C00CF /* Project object */;
+}
