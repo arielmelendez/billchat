@@ -8,12 +8,59 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UITextFieldDelegate>
+static NSString * const TimestampCellReuseID = @"TimestampCellId";
+static NSString * const UserMsgCellReuseID = @"UserMessageCellId";
+static NSString * const BotMsgCellReuseID = @"BotMessageCellId";
+static NSString * const UserBillCellReuseID = @"UserBillCellId";
+
+@interface TimestampCollectionViewCell : UICollectionReusableView
+@property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
+
+@end
+
+// TODO: Move to other source files
+@implementation TimestampCollectionViewCell
+
+@end
+
+@interface UserMessageCollectionViewCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UILabel *chatTextLabel;
+
+@end
+
+@implementation UserMessageCollectionViewCell
+
+@end
+
+@interface BotMessageCollectionViewCell : UICollectionViewCell
+@property (weak, nonatomic) IBOutlet UILabel *chatTextLabel;
+
+@end
+
+@implementation BotMessageCollectionViewCell
+
+@end
+
+@interface UserBillCollectionViewCell : UICollectionViewCell
+
+@end
+
+@implementation UserBillCollectionViewCell
+
+@end
+
+@interface ViewController () <
+    UICollectionViewDelegate,
+    UICollectionViewDataSource,
+    UITextFieldDelegate,
+    UICollectionViewDelegateFlowLayout>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *chatCollectionView;
 @property (weak, nonatomic) IBOutlet UITextField *chatTextField;
 @property (weak, nonatomic) IBOutlet UIView *chatEntryContainer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeightConstraint;
+
+@property (strong, nonatomic, readwrite) NSMutableArray *mockData;
 
 @end
 
@@ -22,6 +69,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupMockData];
     [self setupCollectionView];
     [self setupTextField];
     [self startObservingKeyboard];
@@ -67,16 +115,12 @@
     NSTimeInterval animationDuration = [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     CGRect keyboardFrameRect = [keyboardFrameValue CGRectValue];
     CGFloat keyboardHeight = keyboardFrameRect.size.height;
-
-    // Because the "space" is actually the difference between the bottom lines of the 2 views,
-    // we need to set a negative constant value here.
     self.keyboardHeightConstraint.constant = -keyboardHeight;
     
     [UIView animateWithDuration:animationDuration animations:^{
         [self.view layoutIfNeeded];
     }];
 }
-
 
 - (void)keyboardWillHide:(NSNotification*)notification {
     NSDictionary *userInfo = notification.userInfo;
@@ -88,19 +132,21 @@
     }];
 }
 
-// Dismiss the keyboard if the user touches anything but the views in the text entry container area
-/*- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [[event allTouches] anyObject];
-    if ([self.chatTextField isFirstResponder] && ![[touch view] isDescendantOfView:self.chatEntryContainer]) {
-        [self.chatTextField resignFirstResponder];
-    }
-
-    [super touchesBegan:touches withEvent:event];
-}*/
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Mock Data Methods
+
+- (void)setupMockData {
+    NSDateFormatter *dateFormatter=[NSDateFormatter new];
+    [dateFormatter setDateFormat:@"hh:mma"];
+    [dateFormatter setAMSymbol:@"am"];
+    [dateFormatter setPMSymbol:@"pm"];
+    
+    self.mockData = [NSMutableArray new];
+    [self.mockData addObject:@[[dateFormatter stringFromDate:[NSDate date]], @"Hello", @"Bot hello"]];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -111,15 +157,72 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    // TODO: Implement!
-    return 0;
+    // TODO: Update for real data
+    if([self.mockData count] > section)
+        return [[self.mockData objectAtIndex:section] count] - 1; // -1 to ignore timestamp data
+    else
+        return 0;
 }
 
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    // TODO: Implement!
-    return nil;
+    // TODO: Update for real data!
+    UICollectionViewCell *cell = nil;
+    if(indexPath.row % 2 == 0) {
+        cell = [self.chatCollectionView dequeueReusableCellWithReuseIdentifier:UserMsgCellReuseID
+                                                                  forIndexPath:indexPath];
+        
+        [cell.layer setCornerRadius:10.0f];
+    } else {
+        cell = [self.chatCollectionView dequeueReusableCellWithReuseIdentifier:BotMsgCellReuseID
+                                                                  forIndexPath:indexPath];
+        [cell.layer setCornerRadius:10.0f];
+        [cell.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [cell.layer setBorderWidth:1.5f];
+    }
+    
+    NSAssert(cell, @"Unexpected nil cell!");
+    return cell;
 }
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    // TODO: Update with real data!
+    return [self.mockData count];
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    
+    NSAssert([self.mockData count] > indexPath.section, @"Unexpected section count!");
+    NSAssert(indexPath.row == 0, @"Unexpected indexPath row for section header!");
+    
+    NSMutableArray *section = [self.mockData objectAtIndex:indexPath.section];
+    
+    TimestampCollectionViewCell *sectionHeader = (TimestampCollectionViewCell*)[self.chatCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                                                                                                                           withReuseIdentifier:TimestampCellReuseID
+                                                                                                                                  forIndexPath:indexPath];
+    if([section count] > indexPath.row)
+        sectionHeader.timestampLabel.text = [section objectAtIndex:indexPath.row];
+    
+    NSAssert(sectionHeader, @"Unexpected nil cell!");
+    return sectionHeader;
+}
+
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    // TODO: Update these sizes
+    return CGSizeMake(self.chatCollectionView.frame.size.width, 50);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    // TODO: Update these sizes
+    return CGSizeMake(self.chatCollectionView.frame.size.width, 30);
+}
+
+//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section;
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section;
+//- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section;
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section;
 
 
 #pragma mark - UITextFieldDelegate
