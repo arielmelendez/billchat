@@ -21,6 +21,22 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 
 @end
 
+@interface MockSectionData : NSObject
+- (instancetype)initWithArray:(NSArray*)array withTimestamp:(NSString*)timestamp;
+@property (retain, nonatomic, readwrite) NSMutableArray *messages;
+@property (copy, nonatomic, readwrite) NSString *timestamp;
+@end
+
+@implementation MockSectionData
+- (instancetype)initWithArray:(NSArray*)array withTimestamp:(NSString*)timestamp {
+    if(self = [super init]) {
+        self.messages = [array mutableCopy];
+        self.timestamp = timestamp;
+    }
+    return self;
+}
+@end
+
 // TODO: Move to other source files
 @implementation TimestampCollectionViewCell
 
@@ -28,9 +44,11 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 
 @interface UserMessageCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *chatTextLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topMarginConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomMarginConstraint;
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chatTextHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chatTextWidthConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomMarginConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topMarginConstraint;
+@property (weak, nonatomic) IBOutlet UIView *chatTextBackground;
 @end
 
 @implementation UserMessageCollectionViewCell
@@ -39,9 +57,11 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 
 @interface BotMessageCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *chatTextLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomMarginConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topMarginConstraint;
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chatTextHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chatTextWidthConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomMarginConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topMarginConstraint;
+@property (weak, nonatomic) IBOutlet UIView *chatTextBackground;
 @end
 
 @implementation BotMessageCollectionViewCell
@@ -64,7 +84,6 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *chatCollectionView;
 @property (weak, nonatomic) IBOutlet UITextField *chatTextField;
-@property (weak, nonatomic) IBOutlet UIView *chatEntryContainer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *keyboardHeightConstraint;
 
 @property (strong, nonatomic, readwrite) NSMutableArray *mockData;
@@ -153,7 +172,9 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
     [dateFormatter setPMSymbol:@"pm"];
     
     self.mockData = [NSMutableArray new];
-    [self.mockData addObject:[[NSMutableArray alloc] initWithArray:@[[dateFormatter stringFromDate:[NSDate date]], @"Hello", @"Bot hello"]]];
+    MockSectionData* entry = [[MockSectionData alloc] initWithArray:[[NSMutableArray alloc] initWithArray:@[@"Hello", @"Bot hello"]]
+                                                      withTimestamp:[dateFormatter stringFromDate:[NSDate date]]];
+    [self.mockData addObject:entry];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -165,38 +186,54 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     // TODO: Update for real data
-    if([self.mockData count] > section)
-        return [[self.mockData objectAtIndex:section] count] - 1; // -1 to ignore timestamp data
-    else
+    if([self.mockData count] > section) {
+        MockSectionData* sectionData = [self.mockData objectAtIndex:section];
+        return [sectionData.messages count];
+    } else
         return 0;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     // TODO: Update for real data!
+    MockSectionData *sectionData = [self.mockData objectAtIndex:indexPath.section];
     UICollectionViewCell *cell = nil;
-    if((indexPath.row + 1) % 2 == 0) {
+    if(indexPath.row % 2 == 0) {
         UserMessageCollectionViewCell *userMsgCell =
             (UserMessageCollectionViewCell*)[self.chatCollectionView dequeueReusableCellWithReuseIdentifier:UserMsgCellReuseID
                                                                                                forIndexPath:indexPath];
         
-        [userMsgCell.layer setCornerRadius:ChatCellTextVerticalMargin];
-        userMsgCell.topMarginConstraint.constant = ChatCellTextVerticalMargin;
-        userMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
-        
-        userMsgCell.chatTextLabel.text = [[self.mockData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row + 1];
+        [userMsgCell.chatTextBackground.layer setCornerRadius:ChatCellTextVerticalMargin];
+        //userMsgCell.topMarginConstraint.constant = ChatCellTextVerticalMargin;
+        //userMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
+
+        userMsgCell.chatTextLabel.text = [sectionData.messages objectAtIndex:indexPath.row];
+        CGRect r = [userMsgCell.chatTextLabel.text boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width, 0)
+                                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                                             attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}
+                                                                context:nil];
+        userMsgCell.chatTextHeightConstraint.constant = userMsgCell.frame.size.height;
+        userMsgCell.chatTextWidthConstraint.constant = MIN(r.size.width + 2 * ChatCellTextHorizontalMargin, self.chatCollectionView.frame.size.width);
         
         cell = userMsgCell;
     } else {
          BotMessageCollectionViewCell *botMsgCell =
             [self.chatCollectionView dequeueReusableCellWithReuseIdentifier:BotMsgCellReuseID
                                                                forIndexPath:indexPath];
-        [botMsgCell.layer setCornerRadius:ChatCellTextVerticalMargin];
-        botMsgCell.topMarginConstraint.constant = ChatCellTextVerticalMargin;
-        botMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
-        [botMsgCell.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        [botMsgCell.layer setBorderWidth:0.5f];
+        [botMsgCell.chatTextBackground.layer setCornerRadius:ChatCellTextVerticalMargin];
+        //botMsgCell.topMarginConstraint.constant = ChatCellTextVerticalMargin;
+        //botMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
+        [botMsgCell.chatTextBackground.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [botMsgCell.chatTextBackground.layer setBorderWidth:0.5f];
         
-        botMsgCell.chatTextLabel.text = [[self.mockData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row + 1];
+        CGRect r = [botMsgCell.chatTextLabel.text boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width, 0)
+                                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                                             attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}
+                                                                context:nil];
+        botMsgCell.chatTextHeightConstraint.constant = botMsgCell.frame.size.height;
+        NSLog(@"Width of text %@ is %f", botMsgCell.chatTextLabel.text, r.size.width);
+        botMsgCell.chatTextWidthConstraint.constant = MIN(r.size.width + 2 * ChatCellTextHorizontalMargin, self.chatCollectionView.frame.size.width);
+        NSLog(@"Chosen width is %f", botMsgCell.chatTextWidthConstraint.constant);
+        botMsgCell.chatTextLabel.text = [sectionData.messages objectAtIndex:indexPath.row];
 
         cell = botMsgCell;
     }
@@ -215,13 +252,12 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
     NSAssert([self.mockData count] > indexPath.section, @"Unexpected section count!");
     NSAssert(indexPath.row == 0, @"Unexpected indexPath row for section header!");
     
-    NSMutableArray *section = [self.mockData objectAtIndex:indexPath.section];
+    MockSectionData *sectionData = [self.mockData objectAtIndex:indexPath.section];
     
     TimestampCollectionViewCell *sectionHeader = (TimestampCollectionViewCell*)[self.chatCollectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                                                                                                                            withReuseIdentifier:TimestampCellReuseID
                                                                                                                                   forIndexPath:indexPath];
-    if([section count] > indexPath.row)
-        sectionHeader.timestampLabel.text = [section objectAtIndex:indexPath.row];
+    sectionHeader.timestampLabel.text = sectionData.timestamp;
     
     NSAssert(sectionHeader, @"Unexpected nil cell!");
     return sectionHeader;
@@ -232,13 +268,14 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     // TODO: Update these sizes
-    NSString* msgStr = [[self.mockData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    MockSectionData *sectionData = [self.mockData objectAtIndex:indexPath.section];
+    NSString* msgStr = [sectionData.messages objectAtIndex:indexPath.row];
     CGRect r = [msgStr boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width, 0)
                                     options:NSStringDrawingUsesLineFragmentOrigin
                                  attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}
                                     context:nil];
-    
-    return CGSizeMake(self.chatCollectionView.frame.size.width, r.size.height + ChatCellTextVerticalMargin * 2);
+    CGSize ret = CGSizeMake(self.chatCollectionView.frame.size.width, r.size.height + ChatCellTextVerticalMargin * 2);
+    return ret;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
@@ -257,8 +294,9 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     // TODO: Send/save msg
     NSString *chatMsg = textField.text;
-    [[self.mockData objectAtIndex:self.mockData.count - 1] addObject:chatMsg];
-    [[self.mockData objectAtIndex:self.mockData.count - 1] addObject:chatMsg];
+    MockSectionData *sectionData = [self.mockData objectAtIndex:self.mockData.count - 1];
+    [sectionData.messages addObject:chatMsg];
+    [sectionData.messages addObject:chatMsg];
     [self.chatCollectionView reloadData];
     textField.text = @"";
     
