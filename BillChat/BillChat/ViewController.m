@@ -196,45 +196,70 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     // TODO: Update for real data!
     MockSectionData *sectionData = [self.mockData objectAtIndex:indexPath.section];
+    NSString *message = [sectionData.messages objectAtIndex:indexPath.row];
     UICollectionViewCell *cell = nil;
     if(indexPath.row % 2 == 0) {
+        
+        // Get a reusable cell for user messages
         UserMessageCollectionViewCell *userMsgCell =
             (UserMessageCollectionViewCell*)[self.chatCollectionView dequeueReusableCellWithReuseIdentifier:UserMsgCellReuseID
                                                                                                forIndexPath:indexPath];
         
+        // Stylize the background of the chat text
         [userMsgCell.chatTextBackground.layer setCornerRadius:ChatCellTextVerticalMargin];
+        
+        // Ensure that the corner radius matches the vertical and horizontal margins to the text
         //userMsgCell.topMarginConstraint.constant = ChatCellTextVerticalMargin;
         //userMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
 
-        userMsgCell.chatTextLabel.text = [sectionData.messages objectAtIndex:indexPath.row];
+        // Set the text for the chat cell
+        userMsgCell.chatTextLabel.text = message;
+        
+        // Determine the size of the entered text
         CGRect r = [userMsgCell.chatTextLabel.text boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width, 0)
                                                                 options:NSStringDrawingUsesLineFragmentOrigin
                                                              attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}
                                                                 context:nil];
+        
+        // Set the height of the text background area based on the calculated text height
         userMsgCell.chatTextHeightConstraint.constant = userMsgCell.frame.size.height;
+        
+        // Set the width of the text background area based on the calculated text width
+        // making sure to limit it to the width of the cell
         userMsgCell.chatTextWidthConstraint.constant = MIN(r.size.width + 2 * ChatCellTextHorizontalMargin, self.chatCollectionView.frame.size.width);
         
         cell = userMsgCell;
     } else {
-         BotMessageCollectionViewCell *botMsgCell =
+        // Get a reusable cell for response messages
+        BotMessageCollectionViewCell *botMsgCell =
             [self.chatCollectionView dequeueReusableCellWithReuseIdentifier:BotMsgCellReuseID
                                                                forIndexPath:indexPath];
+        // Stylize the background of the chat text
         [botMsgCell.chatTextBackground.layer setCornerRadius:ChatCellTextVerticalMargin];
-        //botMsgCell.topMarginConstraint.constant = ChatCellTextVerticalMargin;
-        //botMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
         [botMsgCell.chatTextBackground.layer setBorderColor:[UIColor lightGrayColor].CGColor];
         [botMsgCell.chatTextBackground.layer setBorderWidth:0.5f];
         
+        // Ensure that the corner radius matches the vertical and horizontal margins to the text
+        //botMsgCell.topMarginConstraint.constant = ChatCellTextVerticalMargin;
+        //botMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
+
+        // Set the text for the chat cell
+        botMsgCell.chatTextLabel.text = message;
+
+        // Determine the size of the entered text
         CGRect r = [botMsgCell.chatTextLabel.text boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width, 0)
                                                                 options:NSStringDrawingUsesLineFragmentOrigin
                                                              attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}
                                                                 context:nil];
+        
+        // Set the height of the text background area based on the calculated text height
         botMsgCell.chatTextHeightConstraint.constant = botMsgCell.frame.size.height;
-        NSLog(@"Width of text %@ is %f", botMsgCell.chatTextLabel.text, r.size.width);
-        botMsgCell.chatTextWidthConstraint.constant = MIN(r.size.width + 2 * ChatCellTextHorizontalMargin, self.chatCollectionView.frame.size.width);
-        NSLog(@"Chosen width is %f", botMsgCell.chatTextWidthConstraint.constant);
-        botMsgCell.chatTextLabel.text = [sectionData.messages objectAtIndex:indexPath.row];
-
+        
+        // Set the width of the text background area based on the calculated text width
+        // making sure to limit it to the width of the cell (Note: add 1 pixel to ensure
+        // text doesn't get truncated)
+        botMsgCell.chatTextWidthConstraint.constant = MIN(r.size.width + 2 * ChatCellTextHorizontalMargin + 1, self.chatCollectionView.frame.size.width);
+        
         cell = botMsgCell;
     }
     
@@ -293,7 +318,7 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     // TODO: Send/save msg
-    NSString *chatMsg = textField.text;
+    NSString *chatMsg = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     MockSectionData *sectionData = [self.mockData objectAtIndex:self.mockData.count - 1];
     [sectionData.messages addObject:chatMsg];
     [sectionData.messages addObject:chatMsg];
