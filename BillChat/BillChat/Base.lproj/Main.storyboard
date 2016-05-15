@@ -55,8 +55,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="558" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="User chat text" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WR9-Uo-Z0Y">
-                                                    <rect key="frame" x="422" y="14.5" width="108" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User chat text" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WR9-Uo-Z0Y">
+                                                    <rect key="frame" x="440" y="5" width="108" height="40"/>
                                                     <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -67,14 +67,16 @@
                                         </view>
                                         <color key="backgroundColor" red="0.96037425173846147" green="0.96037425173846147" blue="0.96037425173846147" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstItem="WR9-Uo-Z0Y" firstAttribute="top" secondItem="crV-mR-UIc" secondAttribute="topMargin" constant="5" id="C6y-Gv-Llz"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="WR9-Uo-Z0Y" secondAttribute="bottom" constant="5" id="M6t-a8-8ek"/>
+                                            <constraint firstItem="WR9-Uo-Z0Y" firstAttribute="top" secondItem="crV-mR-UIc" secondAttribute="top" constant="5" id="C6y-Gv-Llz"/>
+                                            <constraint firstAttribute="bottom" secondItem="WR9-Uo-Z0Y" secondAttribute="bottom" constant="5" id="M6t-a8-8ek"/>
                                             <constraint firstItem="WR9-Uo-Z0Y" firstAttribute="centerY" secondItem="crV-mR-UIc" secondAttribute="centerY" id="RPN-PC-mnb"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="WR9-Uo-Z0Y" secondAttribute="trailing" constant="10" id="mJM-br-R0A"/>
+                                            <constraint firstAttribute="trailing" secondItem="WR9-Uo-Z0Y" secondAttribute="trailing" constant="10" id="mJM-br-R0A"/>
                                         </constraints>
                                         <size key="customSize" width="558" height="50"/>
                                         <connections>
+                                            <outlet property="bottomMarginConstraint" destination="M6t-a8-8ek" id="pZM-JC-QZf"/>
                                             <outlet property="chatTextLabel" destination="WR9-Uo-Z0Y" id="hsx-81-huN"/>
+                                            <outlet property="topMarginConstraint" destination="C6y-Gv-Llz" id="sKG-Re-Pw5"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BotMessageCellId" id="AEv-gM-mYu" customClass="BotMessageCollectionViewCell">
@@ -85,7 +87,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bot chat Text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Hn-f2-DtV">
-                                                    <rect key="frame" x="18" y="13" width="102" height="37"/>
+                                                    <rect key="frame" x="10" y="5" width="102" height="53"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -96,14 +98,16 @@
                                         </view>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstItem="8Hn-f2-DtV" firstAttribute="leading" secondItem="AEv-gM-mYu" secondAttribute="leadingMargin" constant="10" id="J05-hJ-6m1"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="8Hn-f2-DtV" secondAttribute="bottom" constant="5" id="Z29-ha-gsv"/>
+                                            <constraint firstItem="8Hn-f2-DtV" firstAttribute="leading" secondItem="AEv-gM-mYu" secondAttribute="leading" constant="10" id="J05-hJ-6m1"/>
+                                            <constraint firstAttribute="bottom" secondItem="8Hn-f2-DtV" secondAttribute="bottom" constant="5" id="Z29-ha-gsv"/>
                                             <constraint firstItem="8Hn-f2-DtV" firstAttribute="centerY" secondItem="AEv-gM-mYu" secondAttribute="centerY" id="inT-bh-2aI"/>
-                                            <constraint firstItem="8Hn-f2-DtV" firstAttribute="top" secondItem="AEv-gM-mYu" secondAttribute="topMargin" constant="5" id="jnE-Pr-Kz4"/>
+                                            <constraint firstItem="8Hn-f2-DtV" firstAttribute="top" secondItem="AEv-gM-mYu" secondAttribute="top" constant="5" id="jnE-Pr-Kz4"/>
                                         </constraints>
                                         <size key="customSize" width="560" height="63"/>
                                         <connections>
+                                            <outlet property="bottomMarginConstraint" destination="Z29-ha-gsv" id="dUq-Y1-OEL"/>
                                             <outlet property="chatTextLabel" destination="8Hn-f2-DtV" id="FrS-bQ-fYe"/>
+                                            <outlet property="topMarginConstraint" destination="jnE-Pr-Kz4" id="Uiv-LU-el6"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UserBillCellId" id="0NR-5b-EKd" customClass="UserBillCollectionViewCell">

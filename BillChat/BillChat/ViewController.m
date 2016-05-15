@@ -13,6 +13,9 @@ static NSString * const UserMsgCellReuseID = @"UserMessageCellId";
 static NSString * const BotMsgCellReuseID = @"BotMessageCellId";
 static NSString * const UserBillCellReuseID = @"UserBillCellId";
 
+static NSUInteger const ChatCellTextVerticalMargin = 5;
+static NSUInteger const ChatCellTextHorizontalMargin = 5;
+
 @interface TimestampCollectionViewCell : UICollectionReusableView
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 
@@ -25,6 +28,8 @@ static NSString * const UserBillCellReuseID = @"UserBillCellId";
 
 @interface UserMessageCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *chatTextLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topMarginConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomMarginConstraint;
 
 @end
 
@@ -34,6 +39,8 @@ static NSString * const UserBillCellReuseID = @"UserBillCellId";
 
 @interface BotMessageCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UILabel *chatTextLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomMarginConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topMarginConstraint;
 
 @end
 
@@ -141,12 +148,12 @@ static NSString * const UserBillCellReuseID = @"UserBillCellId";
 
 - (void)setupMockData {
     NSDateFormatter *dateFormatter=[NSDateFormatter new];
-    [dateFormatter setDateFormat:@"hh:mma"];
+    [dateFormatter setDateFormat:@"h:mma"];
     [dateFormatter setAMSymbol:@"am"];
     [dateFormatter setPMSymbol:@"pm"];
     
     self.mockData = [NSMutableArray new];
-    [self.mockData addObject:@[[dateFormatter stringFromDate:[NSDate date]], @"Hello", @"Bot hello"]];
+    [self.mockData addObject:[[NSMutableArray alloc] initWithArray:@[[dateFormatter stringFromDate:[NSDate date]], @"Hello", @"Bot hello"]]];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -167,17 +174,31 @@ static NSString * const UserBillCellReuseID = @"UserBillCellId";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     // TODO: Update for real data!
     UICollectionViewCell *cell = nil;
-    if(indexPath.row % 2 == 0) {
-        cell = [self.chatCollectionView dequeueReusableCellWithReuseIdentifier:UserMsgCellReuseID
-                                                                  forIndexPath:indexPath];
+    if((indexPath.row + 1) % 2 == 0) {
+        UserMessageCollectionViewCell *userMsgCell =
+            (UserMessageCollectionViewCell*)[self.chatCollectionView dequeueReusableCellWithReuseIdentifier:UserMsgCellReuseID
+                                                                                               forIndexPath:indexPath];
         
-        [cell.layer setCornerRadius:10.0f];
+        [userMsgCell.layer setCornerRadius:ChatCellTextVerticalMargin];
+        userMsgCell.topMarginConstraint.constant = ChatCellTextVerticalMargin;
+        userMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
+        
+        userMsgCell.chatTextLabel.text = [[self.mockData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row + 1];
+        
+        cell = userMsgCell;
     } else {
-        cell = [self.chatCollectionView dequeueReusableCellWithReuseIdentifier:BotMsgCellReuseID
-                                                                  forIndexPath:indexPath];
-        [cell.layer setCornerRadius:10.0f];
-        [cell.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        [cell.layer setBorderWidth:1.5f];
+         BotMessageCollectionViewCell *botMsgCell =
+            [self.chatCollectionView dequeueReusableCellWithReuseIdentifier:BotMsgCellReuseID
+                                                               forIndexPath:indexPath];
+        [botMsgCell.layer setCornerRadius:ChatCellTextVerticalMargin];
+        botMsgCell.topMarginConstraint.constant = ChatCellTextVerticalMargin;
+        botMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
+        [botMsgCell.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [botMsgCell.layer setBorderWidth:0.5f];
+        
+        botMsgCell.chatTextLabel.text = [[self.mockData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row + 1];
+
+        cell = botMsgCell;
     }
     
     NSAssert(cell, @"Unexpected nil cell!");
@@ -211,7 +232,13 @@ static NSString * const UserBillCellReuseID = @"UserBillCellId";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     // TODO: Update these sizes
-    return CGSizeMake(self.chatCollectionView.frame.size.width, 50);
+    NSString* msgStr = [[self.mockData objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    CGRect r = [msgStr boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width, 0)
+                                    options:NSStringDrawingUsesLineFragmentOrigin
+                                 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}
+                                    context:nil];
+    
+    return CGSizeMake(self.chatCollectionView.frame.size.width, r.size.height + ChatCellTextVerticalMargin * 2);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
@@ -228,8 +255,11 @@ static NSString * const UserBillCellReuseID = @"UserBillCellId";
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
-    NSLog(@"SEND THE MESSAGE! Message = %@", textField.text);
+    // TODO: Send/save msg
+    NSString *chatMsg = textField.text;
+    [[self.mockData objectAtIndex:self.mockData.count - 1] addObject:chatMsg];
+    [[self.mockData objectAtIndex:self.mockData.count - 1] addObject:chatMsg];
+    [self.chatCollectionView reloadData];
     textField.text = @"";
     
     return YES;
