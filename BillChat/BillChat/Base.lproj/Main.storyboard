@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,68 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="09q-0D-a3h">
+                                <rect key="frame" x="20" y="20" width="560" height="520"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kjD-FI-0BT">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="crV-mR-UIc">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d7K-lU-noN" userLabel="UserTextEntryContainer">
+                                <rect key="frame" x="20" y="540" width="560" height="60"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P5S-cD-rO5" userLabel="ChatTextField">
+                                        <rect key="frame" x="10" y="10" width="540" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="snz-aG-6am"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" red="0.95924683682373468" green="0.95924683682373468" blue="0.95924683682373468" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="P5S-cD-rO5" secondAttribute="trailing" constant="10" id="SIA-o9-EfF"/>
+                                    <constraint firstAttribute="height" constant="60" id="ehb-wd-Geq"/>
+                                    <constraint firstItem="P5S-cD-rO5" firstAttribute="leading" secondItem="d7K-lU-noN" secondAttribute="leading" constant="10" id="vAp-CU-iwH"/>
+                                    <constraint firstItem="P5S-cD-rO5" firstAttribute="top" secondItem="d7K-lU-noN" secondAttribute="top" constant="10" id="xOR-5e-JSx"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="09q-0D-a3h" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="I36-z8-roU"/>
+                            <constraint firstItem="d7K-lU-noN" firstAttribute="top" secondItem="09q-0D-a3h" secondAttribute="bottom" id="Mxr-Kn-Dpj"/>
+                            <constraint firstItem="d7K-lU-noN" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="PdR-3B-1ed"/>
+                            <constraint firstItem="d7K-lU-noN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="RTt-jl-We0"/>
+                            <constraint firstItem="d7K-lU-noN" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="UqQ-sC-H0M"/>
+                            <constraint firstItem="09q-0D-a3h" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="dzw-E0-8Y0"/>
+                            <constraint firstItem="09q-0D-a3h" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="r5L-4o-8xV"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="chatCollectionView" destination="09q-0D-a3h" id="fRA-xa-Elx"/>
+                        <outlet property="chatTextField" destination="P5S-cD-rO5" id="p4c-ok-6fS"/>
+                        <outlet property="keyboardHeightConstraint" destination="UqQ-sC-H0M" id="4XM-cf-gbM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="185" y="364"/>
         </scene>
     </scenes>
 </document>
