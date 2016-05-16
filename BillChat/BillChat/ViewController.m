@@ -15,6 +15,7 @@ static NSString * const UserBillCellReuseID = @"UserBillCellId";
 
 static NSUInteger const ChatCellTextVerticalMargin = 5;
 static NSUInteger const ChatCellTextHorizontalMargin = 5;
+static NSUInteger const ChatCellBackgroundHorizontalMargin = 10;
 
 @interface TimestampCollectionViewCell : UICollectionReusableView
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
@@ -35,6 +36,14 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
     }
     return self;
 }
+@end
+
+@interface MockBillData : NSObject
+
+@end
+
+@implementation MockBillData
+
 @end
 
 // TODO: Move to other source files
@@ -177,6 +186,10 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
     [self.mockData addObject:entry];
 }
 
+- (BOOL)isBillDataMessage:(NSObject*)msg {
+    return [msg isKindOfClass:MockBillData.class];
+}
+
 #pragma mark - UICollectionViewDelegate
 
 // TODO: Decide if we need any callbacks
@@ -196,9 +209,12 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     // TODO: Update for real data!
     MockSectionData *sectionData = [self.mockData objectAtIndex:indexPath.section];
-    NSString *message = [sectionData.messages objectAtIndex:indexPath.row];
+    NSObject *message = [sectionData.messages objectAtIndex:indexPath.row];
     UICollectionViewCell *cell = nil;
+    
+    // TODO: Don't assume user messages every other message. Work off declarative checks for the message type or similar.
     if(indexPath.row % 2 == 0) {
+        NSString *messageStr = (NSString*)message;
         
         // Get a reusable cell for user messages
         UserMessageCollectionViewCell *userMsgCell =
@@ -213,11 +229,11 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
         //userMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
 
         // Set the text for the chat cell
-        userMsgCell.chatTextLabel.text = message;
+        userMsgCell.chatTextLabel.text = messageStr;
         
         // Determine the size of the entered text
-        CGRect r = [userMsgCell.chatTextLabel.text boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width, 0)
-                                                                options:NSStringDrawingUsesLineFragmentOrigin
+        CGRect r = [userMsgCell.chatTextLabel.text boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width - ChatCellBackgroundHorizontalMargin - 2 * ChatCellTextHorizontalMargin, CGFLOAT_MAX)
+                                                                options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
                                                              attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}
                                                                 context:nil];
         
@@ -226,13 +242,21 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
         
         // Set the width of the text background area based on the calculated text width
         // making sure to limit it to the width of the cell
-        userMsgCell.chatTextWidthConstraint.constant = MIN(r.size.width + 2 * ChatCellTextHorizontalMargin, self.chatCollectionView.frame.size.width);
+        userMsgCell.chatTextWidthConstraint.constant = MIN(r.size.width + 2 * ChatCellTextHorizontalMargin, self.chatCollectionView.frame.size.width - ChatCellBackgroundHorizontalMargin);
         
         cell = userMsgCell;
+    } else if([self isBillDataMessage:message]) {
+        UserBillCollectionViewCell *billCell = (UserBillCollectionViewCell*)[self.chatCollectionView dequeueReusableCellWithReuseIdentifier:UserBillCellReuseID
+                                                                                                                                  forIndexPath:indexPath];
+        // TODO: Stylize and populate bill details, deal with animation (?), etc.
+        
+        cell = billCell;
     } else {
+        NSString *messageStr = (NSString*)message;
+        
         // Get a reusable cell for response messages
         BotMessageCollectionViewCell *botMsgCell =
-            [self.chatCollectionView dequeueReusableCellWithReuseIdentifier:BotMsgCellReuseID
+            (BotMessageCollectionViewCell*)[self.chatCollectionView dequeueReusableCellWithReuseIdentifier:BotMsgCellReuseID
                                                                forIndexPath:indexPath];
         // Stylize the background of the chat text
         [botMsgCell.chatTextBackground.layer setCornerRadius:ChatCellTextVerticalMargin];
@@ -244,11 +268,11 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
         //botMsgCell.bottomMarginConstraint.constant = ChatCellTextVerticalMargin;
 
         // Set the text for the chat cell
-        botMsgCell.chatTextLabel.text = message;
+        botMsgCell.chatTextLabel.text = messageStr;
 
         // Determine the size of the entered text
-        CGRect r = [botMsgCell.chatTextLabel.text boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width, 0)
-                                                                options:NSStringDrawingUsesLineFragmentOrigin
+        CGRect r = [botMsgCell.chatTextLabel.text boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width - ChatCellBackgroundHorizontalMargin - 2 * ChatCellTextHorizontalMargin, CGFLOAT_MAX)
+                                                                options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
                                                              attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}
                                                                 context:nil];
         
@@ -258,7 +282,7 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
         // Set the width of the text background area based on the calculated text width
         // making sure to limit it to the width of the cell (Note: add 1 pixel to ensure
         // text doesn't get truncated)
-        botMsgCell.chatTextWidthConstraint.constant = MIN(r.size.width + 2 * ChatCellTextHorizontalMargin + 1, self.chatCollectionView.frame.size.width);
+        botMsgCell.chatTextWidthConstraint.constant = MIN(r.size.width + 2 * ChatCellTextHorizontalMargin + 1, self.chatCollectionView.frame.size.width - ChatCellBackgroundHorizontalMargin);
         
         cell = botMsgCell;
     }
@@ -294,13 +318,17 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     // TODO: Update these sizes
     MockSectionData *sectionData = [self.mockData objectAtIndex:indexPath.section];
-    NSString* msgStr = [sectionData.messages objectAtIndex:indexPath.row];
-    CGRect r = [msgStr boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width, 0)
-                                    options:NSStringDrawingUsesLineFragmentOrigin
-                                 attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}
-                                    context:nil];
-    CGSize ret = CGSizeMake(self.chatCollectionView.frame.size.width, r.size.height + ChatCellTextVerticalMargin * 2);
-    return ret;
+    NSObject *message = [sectionData.messages objectAtIndex:indexPath.row];
+    if([self isBillDataMessage:message]) {
+        return CGSizeMake(self.chatCollectionView.frame.size.width, 100);
+    } else {
+        NSString* msgStr = (NSString*)message;
+        CGRect r = [msgStr boundingRectWithSize:CGSizeMake(self.chatCollectionView.frame.size.width - ChatCellBackgroundHorizontalMargin - 2 * ChatCellTextHorizontalMargin, CGFLOAT_MAX)
+                                        options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
+                                     attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12.0f]}
+                                        context:nil];
+        return CGSizeMake(self.chatCollectionView.frame.size.width, r.size.height + ChatCellTextVerticalMargin * 2);
+    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
@@ -321,7 +349,12 @@ static NSUInteger const ChatCellTextHorizontalMargin = 5;
     NSString *chatMsg = [textField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     MockSectionData *sectionData = [self.mockData objectAtIndex:self.mockData.count - 1];
     [sectionData.messages addObject:chatMsg];
-    [sectionData.messages addObject:chatMsg];
+    if([chatMsg rangeOfString:@"bill" options:NSCaseInsensitiveSearch].location != NSNotFound) {
+        // TODO: FAKE MARKER FOR BILL DATA
+        [sectionData.messages addObject:[MockBillData new]];
+    } else {
+        [sectionData.messages addObject:chatMsg];
+    }
     [self.chatCollectionView reloadData];
     textField.text = @"";
     
